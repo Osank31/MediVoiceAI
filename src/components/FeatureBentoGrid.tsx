@@ -1,7 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
 import {
   IconBoxAlignRightFilled,
   IconClipboardCopy,
@@ -10,9 +9,10 @@ import {
   IconTableColumn,
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 
 
-export function BentoGridThirdDemo() {
+export function FeatureBentoGrid() {
   return (
     <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem]">
       {items.map((item, i) => (
