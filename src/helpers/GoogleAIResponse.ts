@@ -8,22 +8,23 @@ import {
 
 export async function suggestDoctors(input: string) {
     const ai = new GoogleGenAI({
-        apiKey: process.env.GEMINI_API_KEY,
-    });
-    const tools = [
+    apiKey: process.env.GEMINI_API_KEY,
+  });
+  const tools = [
+    {
+      googleSearch: {
+      }
+    },
+  ];
+  const config = {
+    temperature: 0,
+    thinkingConfig: {
+      thinkingBudget: -1,
+    },
+    tools,
+    systemInstruction: [
         {
-            googleSearch: {
-            }
-        },
-    ];
-    const config = {
-        thinkingConfig: {
-            thinkingBudget: -1,
-        },
-        tools,
-        systemInstruction: [
-            {
-                text: `you are a model that will only give the doctors required to cure specific illnesses. the doctors you will use will be from this array
+          text: `you are a model that will only give the doctors required to cure specific illnesses. the doctors you will use will be from this array
 [
     {
         id: 1,
@@ -118,44 +119,46 @@ export async function suggestDoctors(input: string) {
 ]
 
 you have to give the doctors good for curing these diseases. you cannot give an empty array
+
+you have to return a json response to me and not any string
 `,
-            }
-        ],
-    };
-    const model = 'gemini-2.5-pro';
-    const contents = [
+        }
+    ],
+  };
+  const model = 'gemini-2.5-pro';
+  const contents = [
+    {
+      role: 'user',
+      parts: [
         {
-            role: 'user',
-            parts: [
-                {
-                    text: `I have body pain
+          text: `I have body pain
 `,
-                },
-            ],
+        },
+      ],
+    },
+    {
+      role: 'model',
+      parts: [
+        {
+          text: `**Assessing Doctor Relevance**
+
+I'm currently reviewing the doctor list to determine relevance to "body pain". I've pinpointed "body pain" as a general symptom and am analyzing potential specialists. A General Physician seems like a good initial contact. Next, I'll need to explore other specialists within the provided list to see who else could potentially help.
+
+
+**Evaluating Specialist Options**
+
+I've expanded my analysis of the specialist list. After considering "body pain" as the primary symptom, I'm now honing in on which specialists are most relevant. Besides a General Physician for the initial assessment, the Orthopedic specialist seems crucial. Other specialists appear less directly applicable to the general scope of body pain. Further refinement is necessary to establish precise priorities.
+
+
+**Refining Specialist Prioritization**
+
+After a more thorough evaluation of the doctor list and the "body pain" symptom, I've adjusted my initial assessment. I'm now certain that the General Physician remains the crucial first point of contact for initial diagnosis and referral. The Orthopedic specialist's relevance is confirmed due to their specialization in musculoskeletal issues. I've excluded other specialists who seem less likely to address general body pain, preparing to construct the final JSON response with the selected doctors.
+
+
+`,
         },
         {
-            role: 'model',
-            parts: [
-                {
-                    text: `**Determining Suitable Specialists**
-
-I'm currently focused on the challenge of identifying the right doctors for "body pain" within the given list. Initially, the vagueness of the symptom posed a hurdle. Now, I am in the midst of a methodical review, looking into the specialities of each listed doctor. I'm carefully evaluating if their expertise align with the general nature of body pain, starting with the potential suitability of a General Physician.
-
-
-**Evaluating Doctor Specializations**
-
-I'm now zeroing in on the specifics, particularly the suitability of each listed doctor. My process now involves a closer look, focusing on the core specialties that best address "body pain." The General Physician remains a solid first choice, given their broad approach. However, I'm finding the Orthopedic specialist is a likely target, their expertise in bone, joint, and muscle pain perfectly aligns. I'm carefully determining the primary and secondary options for the user.
-
-
-**Selecting Appropriate Doctors**
-
-I've completed my analysis of the doctors, focusing on their specialties and "body pain." The General Physician remains a strong first choice, their wide-ranging knowledge proving invaluable. Further, the Orthopedic specialist emerged as the perfect specialist for musculoskeletal pain. My analysis confirms the list \`[General Physician, Orthopedic]\` as the solution.
-
-
-`,
-                },
-                {
-                    text: `\`\`\`json
+          text: `\`\`\`json
 [
     {
         "id": 1,
@@ -177,27 +180,28 @@ I've completed my analysis of the doctors, focusing on their specialties and "bo
     }
 ]
 \`\`\``,
-                },
-            ],
         },
+      ],
+    },
+    {
+      role: 'user',
+      parts: [
         {
-            role: 'user',
-            parts: [
-                {
-                    text: `${input}`,
-                },
-            ],
+          text: `${input}`,
         },
-    ];
-    const response = await ai.models.generateContentStream({
-        model,
-        config,
-        contents,
-    });
-    let ans = ""
-    for await (const chunk of response) {
-        ans = ans + (chunk.text);
-    }
-    return ans
+      ],
+    },
+  ];
+
+  const response = await ai.models.generateContentStream({
+    model,
+    config,
+    contents,
+  });
+  let ans = '';
+  for await (const chunk of response) {
+    ans+=(chunk.text);
+  }
+  return ans
 }
 

@@ -74,7 +74,7 @@ function AddNewSessionDialog() {
                     <div className="flex gap-10 overflow-x-auto flex-nowrap">
                         {suggestion.map((doc, idx) => (
                             <div key={idx} className="flex-shrink-0">
-                                <DoctorSuggestionCard docSugg={doc} />
+                                <DoctorSuggestionCard docSugg={doc} notes={note}/>
                             </div>
                         ))}
                     </div>
