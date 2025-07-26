@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import HistoryList from "./_components/HistoryList"
 import DoctorAgentsList from "./_components/DoctorAgentsList"
+import AddNewSessionDialog from "./_components/AddNewSessionDialog"
 
 function Dashboard() {
   return (
@@ -9,7 +10,7 @@ function Dashboard() {
 
         <div className="flex justify-between items-center w-11/12">
           <h2 className="font-bold text-2xl">My Dashboard</h2>
-          <Button className="flex flex-wrap">+ Consult with a doctor</Button>
+          <AddNewSessionDialog/>
         </div>
         <HistoryList />
       </div>
