@@ -3,12 +3,21 @@
 
 import { motion } from "motion/react";
 import { FeatureBentoGrid } from '@/components/FeatureBentoGrid'
-import { UserButton, useUser } from "@clerk/nextjs";
+import { SignedOut, SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import axios from 'axios'
 
 export function HeroSectionOne() {
-
+  // const f = async()=>{
+  //   try {
+  //     const result = await axios.post('/api/class')
+  //     console.log(result.data)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+  // f()
   return (
     <div className="relative my-10 flex flex-col items-center justify-center">
       <Navbar />
@@ -118,15 +127,16 @@ const Navbar = () => {
       </div>
       <div>
         {!user ? (
-          <Link href={'/sign-in'}>
-            <button className="w-24 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 md:w-32 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-              Login
-            </button>
-          </Link>
+          <div>
+            <SignedOut>
+              <SignInButton />
+              <SignUpButton />
+            </SignedOut>
+          </div>
         ) :
           (<div className="flex gap-5 items-center">
             <UserButton />
-            <Button>Dashboard</Button>
+            <Link href={'/dashboard'}><Button>Dashboard</Button></Link>
           </div>)}
       </div>
     </nav>
