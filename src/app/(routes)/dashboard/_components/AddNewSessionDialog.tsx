@@ -36,7 +36,6 @@ function AddNewSessionDialog() {
         <Dialog open={open} onOpenChange={(isOpen) => {
             setOpen(isOpen)
             if (!isOpen) {
-                // Dialog closed - reset suggestion and note
                 setSuggestion(null)
                 setNote('')
             }
@@ -50,8 +49,8 @@ function AddNewSessionDialog() {
                             <DialogDescription asChild>
                                 <div>
                                     <h2>Add Symptoms or any other details</h2>
-                                    <Textarea 
-                                        placeholder="Add details here..." 
+                                    <Textarea
+                                        placeholder="Add details here..."
                                         className="h-[200px] mt-1"
                                         value={note}
                                         onChange={(e) => setNote(e.target.value)}
@@ -60,13 +59,15 @@ function AddNewSessionDialog() {
                             </DialogDescription>
                         </DialogHeader>
                         <DialogFooter>
-                            <DialogClose><Button variant={'outline'}>Cancel</Button></DialogClose>
-                            <Button
-                                disabled={note.length === 0}
-                                onClick={handleSubmit}
-                            >
-                                Next <ArrowRight />
-                            </Button>
+                            <div className="mt-5 flex gap-2">
+                                <DialogClose><Button variant={'outline'}>Cancel</Button></DialogClose>
+                                <Button
+                                    disabled={note.length === 0}
+                                    onClick={handleSubmit}
+                                >
+                                    Next <ArrowRight />
+                                </Button>
+                            </div>
                         </DialogFooter>
                     </div>
                 ) : (
