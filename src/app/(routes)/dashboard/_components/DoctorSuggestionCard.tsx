@@ -10,7 +10,9 @@ import { useRouter } from "next/navigation"
 function DoctorSuggestionCard({ docSugg, notes }: { docSugg: DoctorAgent, notes:string }) {
     const router = useRouter()
     const handleSubmit = async () => {
-        const response = await axios.post('/api/generate-session', {note: notes})
+        const response = await axios.post('/api/generate-session', {note: notes,
+            doctor: docSugg
+        })
         console.log(response.data)
         const {sessionId} = response.data
         router.push(`/medical-agent/${sessionId}`)

@@ -13,5 +13,6 @@ export const sessionChatTable = pgTable("session_chat", {
   notes: text(),
   conversation: json().default(null),
   report: json().default(null),
+  doctor: json().default(null),
   createdBy: varchar({ length: 255 }).notNull()
 });
