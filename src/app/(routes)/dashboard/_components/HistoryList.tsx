@@ -15,7 +15,7 @@ function HistoryList() {
                     height={200}
                 />
                 <h2 className="font-bold text-xl mt-5">No Recent Consultations</h2>
-                <p>It looks like you haven't consulted with any doctors yet</p>
+                <p>It looks like you haven&apos;t consulted with any doctors yet.</p>
                 <Button className="mt-3">+ Start a consultation</Button>
             </div>
         ):(
