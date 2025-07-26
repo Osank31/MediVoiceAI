@@ -10,11 +10,14 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 
+import {suggestDoctors} from '@/helpers/GoogleAIResponse'
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
+import axios from "axios";
 
 function AddNewSessionDialog() {
     const [note, setNote]=useState('')
@@ -35,7 +38,15 @@ function AddNewSessionDialog() {
                 </DialogHeader>
                 <DialogFooter>
                     <DialogClose><Button variant={'outline'}>Cancel</Button></DialogClose>
-                    <Button disabled={note.length === 0}>Next <ArrowRight/> </Button>
+                    <Button 
+                        disabled={note.length === 0} 
+                        onClick={async()=>{
+                            const response = await axios.post('/api/get-doctor-sugesstion', {note})
+                            console.log(response.data)
+                        }}
+                        >
+                        Next <ArrowRight/>
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
