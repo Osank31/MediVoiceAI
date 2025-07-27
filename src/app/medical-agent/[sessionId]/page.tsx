@@ -7,6 +7,7 @@ import { Circle, PhoneOff } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import Vapi from "@vapi-ai/web"
+import { CreateAssistantDTO } from "@vapi-ai/web/dist/api"
 
 type SessionDetails = {
     id: number;
@@ -41,8 +42,8 @@ function DoctorSessionPage() {
     const [transcript, setTranscript] = useState<Array<{ role: string, text: string }>>([]);
 
     const startCall = () => {
-        const apiKey = process.env.NEXT_PUBLIC_VAPI_API_KEY;
-        const assistantId = process.env.NEXT_PUBLIC_VAPI_ASSISSTANT_ID;
+        const apiKey = process.env.NEXT_PUBLIC_VAPI_API_KEY!;
+        const assistantId = process.env.NEXT_PUBLIC_VAPI_ASSISSTANT_ID!;
 
         if (!apiKey || !assistantId) {
             console.error("Missing VAPI API Key or Assistant ID.");
@@ -53,6 +54,30 @@ function DoctorSessionPage() {
         setVapi(vapiInstance);
 
         console.log('Vapi instance created. Connecting...');
+
+        const VapiAIConfig: CreateAssistantDTO = {
+            name: 'AI Medical Voice Agent',
+            firstMessage: "Hi there! I'm your medical assistant. I'm here to help you with any health questions today. What can I assist you with?",
+            transcriber: {
+                provider: 'assembly-ai',
+                language: 'en',
+            },
+            voice: {
+                provider: 'playht',
+                voiceId: data?.doctor?.doctor?.voiceId ?? '',
+            },
+            model: {
+                provider: 'openai',
+                model: 'gpt-4',
+                messages: [
+                    {
+                        role: 'system',
+                        content: data?.doctor?.doctor?.agentPrompt || 'You are a helpful medical assistant designed to answer health-related questions in a clear and accurate way.'
+                    }
+                ]
+            }
+        };
+
 
         // Event listeners
         vapiInstance.on('call-start', () => {
@@ -90,7 +115,7 @@ function DoctorSessionPage() {
         });
 
         try {
-            vapiInstance.start(assistantId);
+            vapiInstance.start({ ...VapiAIConfig });
         } catch (e) {
             console.error("Failed to start Vapi call:", e);
         }
@@ -160,7 +185,7 @@ function DoctorSessionPage() {
                             <div className="mt-8 w-full max-w-md">
                                 <h2 className="mb-2 text-sm text-gray-400">Live Transcript</h2>
                                 <div className="max-h-60 overflow-y-auto text-sm border rounded-md p-3 bg-white">
-                                    {transcript.map((msg, index) => (
+                                    {transcript.slice(-2).map((msg, index) => (
                                         <div key={index} className="mb-1">
                                             <strong className={msg.role === 'user' ? 'text-blue-500' : 'text-green-600'}>
                                                 {msg.role}:
