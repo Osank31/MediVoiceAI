@@ -151,7 +151,7 @@ function DoctorSessionPage() {
             vapi.stop();
             setIsConnected(false)
             setIsSpeaking(false)
-            const result = await generateReport()
+            const result=generateReport()
         }
     };
 
@@ -190,8 +190,8 @@ function DoctorSessionPage() {
                 sessionDetail: data,
                 sessionId
             })
-            console.log(result.data)
-            return result.data
+            const response = await axios.post('/api/save-report', result)
+            console.log(response.data)
         } catch (error) {
             console.log(error)
         }

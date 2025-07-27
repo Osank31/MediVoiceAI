@@ -3,11 +3,11 @@
 // npm install -D @types/node
 
 import {
-    GoogleGenAI,
+  GoogleGenAI,
 } from '@google/genai';
 
 export async function suggestDoctors(input: string) {
-    const ai = new GoogleGenAI({
+  const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY,
   });
   const tools = [
@@ -23,8 +23,8 @@ export async function suggestDoctors(input: string) {
     },
     tools,
     systemInstruction: [
-        {
-          text: `you are a model that will only give the doctors required to cure specific illnesses. the doctors you will use will be from this array
+      {
+        text: `you are a model that will only give the doctors required to cure specific illnesses. the doctors you will use will be from this array
 [
     {
         id: 1,
@@ -122,7 +122,7 @@ you have to give the doctors good for curing these diseases. you cannot give an 
 
 you have to return a json response to me and not any string
 `,
-        }
+      }
     ],
   };
   const model = 'gemini-2.5-pro';
@@ -200,8 +200,130 @@ After a more thorough evaluation of the doctor list and the "body pain" symptom,
   });
   let ans = '';
   for await (const chunk of response) {
-    ans+=(chunk.text);
+    ans += (chunk.text);
   }
   return ans
 }
 
+export async function generateReport(input) {
+  const ai = new GoogleGenAI({
+    apiKey: process.env.GEMINI_API_KEY!,
+  });
+  const config = {
+    temperature: 0,
+    thinkingConfig: {
+      thinkingBudget: -1,
+    },
+    systemInstruction: [
+      {
+        text: `You are an AI medical voice agent that just finished a voice conversation with a user. Based on the transcript generate a structured report with following fields
+1. sessionId: a unique session identifier
+2. agent: the medical specialist name(eg: General Physician AI)
+3. user: name of patient or "Anonymus" if not provided
+4. timestamp: current date and time in ISO format
+5. chiefComplaint: one sentence 
+6. summary of the main health concern
+7. symptoms: list of symptoms mentioned by user
+8. duration: how long did the user experienced the symptoms
+9. severity: mild, moderate or severe
+10. medicationsMentioned: list of any medicines mentioned
+11. recommendations: list of AI suggesstions(eg. rest, see a doctor)
+
+Return the result in this json format:
+{"sessionId":"string","agent":"string","user":"string","timestamp":"ISO Date string","chiefComplaint":"string","summary":"string","symptoms":["symptom1", "symptom2"],"duration": "string", "severity":"string" and so on....}
+
+
+you must not beat around the bush be stright to point and give me the correct output only in json stringified format and noting else
+
+answer how i told you`,
+      }
+    ],
+  };
+  const model = 'gemini-2.5-pro';
+  const contents = [
+    {
+      role: 'user',
+      parts: [
+        {
+          text: `sessionId: 1233
+agent: Physician
+message: {user: hi my name is Osank. i have severe headache and chest pain, asssisstant: "Okay take parcetamol"}
+`,
+        },
+      ],
+    },
+    {
+      role: 'model',
+      parts: [
+        {
+          text: `**Assessing the Initial Input**
+
+I've begun dissecting the user's message, identifying the \`sessionId\`, the target \`agent\`, and the raw \`message\` content. The initial analysis aims to understand the context and intent of the user's input, like "hi my name is Os." I'm now delving deeper, preparing for appropriate responses.
+
+
+**Refining Data Extraction**
+
+I'm now zeroing in on data extraction. I've successfully mapped the \`sessionId\` and \`agent\` fields. Next, I am focusing on pulling the user's name ("Osank") and identifying the key symptoms ("severe headache" and "chest pain"). I'm also preparing to note the "Not mentioned" duration of symptoms. The timestamp generation in ISO format is also on my task list.
+
+
+**Crafting a Detailed Response**
+
+I've successfully identified the user as "Osank" and generated a current timestamp. The chief complaint, "severe headache and chest pain," is clearly defined. The summary will encapsulate all this, with the AI assistant's advice to take paracetamol. Now, I'm composing the structured JSON object, including specific symptoms and recommendations.
+
+
+**Generating the Response Data**
+
+I'm now putting the finishing touches on the JSON object. The timestamp generation is complete, and I've verified the "Osank," "severe headache and chest pain" data. All extracted information is now compiled, including the "Not mentioned" duration and the suggested medications. I'm preparing for the JSON output now.
+
+
+`,
+        },
+        {
+          text: `\`\`\`json
+{
+  "sessionId": "1233",
+  "agent": "Physician AI",
+  "user": "Osank",
+  "timestamp": "2023-10-27T12:30:00.000Z",
+  "chiefComplaint": "The user reports severe headache and chest pain.",
+  "summary": "The user, Osank, is experiencing a severe headache and chest pain. The AI assistant suggested taking paracetamol.",
+  "symptoms": [
+    "severe headache",
+    "chest pain"
+  ],
+  "duration": "Not mentioned",
+  "severity": "severe",
+  "medicationsMentioned": [
+    "paracetamol"
+  ],
+  "recommendations": [
+    "Take paracetamol",
+    "Seek immediate medical attention for chest pain"
+  ]
+}
+\`\`\``,
+        },
+      ],
+    },
+    {
+      role: 'user',
+      parts: [
+        {
+          text: `${JSON.stringify(input)}`,
+        },
+      ],
+    },
+  ];
+
+  const response = await ai.models.generateContentStream({
+    model,
+    config,
+    contents,
+  });
+  let ans=""
+  for await (const chunk of response) {
+    ans+=(chunk.text);
+  }
+  console.log(ans)
+  return ans
+}
