@@ -25,7 +25,7 @@ type SessionDetails = {
         voiceId: string;
         subscriptionRequired: boolean;
     };
-    };
+};
 
 
 function DoctorSessionPage() {
@@ -101,12 +101,39 @@ function DoctorSessionPage() {
 
         vapiInstance.on('message', (message) => {
             if (message.type === 'transcript') {
-                setTranscript(prev => [...prev, {
-                    role: message.role,
-                    text: message.transcript
-                }]);
+                setTranscript((prev) => {
+                    const last = prev[prev.length - 1];
+
+                    if (last && last.role === message.role) {
+                        if (message.transcript.startsWith(last.text)) {
+                            const updated = [...prev];
+                            updated[updated.length - 1] = {
+                                ...last,
+                                text: message.transcript
+                            };
+                            return updated;
+                        }
+
+                        return [
+                            ...prev,
+                            {
+                                role: message.role,
+                                text: message.transcript
+                            }
+                        ];
+                    }
+
+                    return [
+                        ...prev,
+                        {
+                            role: message.role,
+                            text: message.transcript
+                        }
+                    ];
+                });
             }
         });
+
 
         vapiInstance.on('error', (error) => {
             console.error('Vapi error:', error);
@@ -119,9 +146,12 @@ function DoctorSessionPage() {
         }
     };
 
-    const endCall = () => {
+    const endCall = async () => {
         if (vapi) {
             vapi.stop();
+            setIsConnected(false)
+            setIsSpeaking(false)
+            const result = await generateReport()
         }
     };
 
@@ -143,8 +173,8 @@ function DoctorSessionPage() {
 
         fetchData();
     }, [sessionId]);
+    useEffect(() => console.log((transcript)), [transcript, setTranscript])
 
-    // Clean up Vapi instance when component unmounts
     useEffect(() => {
         return () => {
             if (vapi) {
@@ -152,6 +182,20 @@ function DoctorSessionPage() {
             }
         };
     }, [vapi]);
+
+    const generateReport = async () => {
+        try {
+            const result = await axios.post('/api/medical-report', {
+                messages: transcript,
+                sessionDetail: data,
+                sessionId
+            })
+            console.log(result.data)
+            return result.data
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
