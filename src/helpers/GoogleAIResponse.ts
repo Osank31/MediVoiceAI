@@ -50,7 +50,7 @@ export async function suggestDoctors(input: string) {
         description: "Handles skin issues like rashes, acne, or infections.",
         image: "/doctor3.png",
         agentPrompt: "You are a knowledgeable Dermatologist AI. Ask short questions about the skin issue and give simple, clear advice.",
-        voiceId: "sarge",
+        voiceId: "davis",
         subscriptionRequired: true
     },
     {
@@ -59,7 +59,7 @@ export async function suggestDoctors(input: string) {
         description: "Supports mental health and emotional well-being.",
         image: "/doctor4.png",
         agentPrompt: "You are a caring Psychologist AI. Ask how the user is feeling emotionally and give short, supportive tips.",
-        voiceId: "susan",
+        voiceId: "ruby",
         subscriptionRequired: true
     },
     {
@@ -68,7 +68,7 @@ export async function suggestDoctors(input: string) {
         description: "Provides advice on healthy eating and weight management.",
         image: "/doctor5.png",
         agentPrompt: "You are a motivating Nutritionist AI. Ask about current diet or goals and suggest quick, healthy tips.",
-        voiceId: "eileen",
+        voiceId: "jack",
         subscriptionRequired: true
     },
     {
@@ -77,7 +77,7 @@ export async function suggestDoctors(input: string) {
         description: "Focuses on heart health and blood pressure issues.",
         image: "/doctor6.png",
         agentPrompt: "You are a calm Cardiologist AI. Ask about heart symptoms and offer brief, helpful advice.",
-        voiceId: "charlotte",
+        voiceId: "matt",
         subscriptionRequired: true
     },
     {
@@ -86,7 +86,7 @@ export async function suggestDoctors(input: string) {
         description: "Handles ear, nose, and throat-related problems.",
         image: "/doctor7.png",
         agentPrompt: "You are a friendly ENT AI. Ask quickly about ENT symptoms and give simple, clear suggestions.",
-        voiceId: "ayla",
+        voiceId: "chris",
         subscriptionRequired: true
     },
     {
@@ -95,7 +95,7 @@ export async function suggestDoctors(input: string) {
         description: "Helps with bone, joint, and muscle pain.",
         image: "/doctor8.png",
         agentPrompt: "You are an understanding Orthopedic AI. Ask where the pain is and give short, supportive advice.",
-        voiceId: "aaliyah",
+        voiceId: "will",
         subscriptionRequired: true
     },
     {
@@ -104,7 +104,7 @@ export async function suggestDoctors(input: string) {
         description: "Cares for women’s reproductive and hormonal health.",
         image: "/doctor9.png",
         agentPrompt: "You are a respectful Gynecologist AI. Ask brief, gentle questions and keep answers short and reassuring.",
-        voiceId: "hudson",
+        voiceId: "melissa",
         subscriptionRequired: true
     },
     {
@@ -113,7 +113,7 @@ export async function suggestDoctors(input: string) {
         description: "Handles oral hygiene and dental problems.",
         image: "/doctor10.png",
         agentPrompt: "You are a cheerful Dentist AI. Ask about the dental issue and give quick, calming suggestions.",
-        voiceId: "atlas",
+        voiceId: "jennifer",
         subscriptionRequired: true
     }
 ]
