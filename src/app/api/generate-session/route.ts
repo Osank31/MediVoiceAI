@@ -7,7 +7,7 @@ import { currentUser } from '@clerk/nextjs/server';
 export async function POST(req: NextRequest) {
     const body = await req.json()
     const {note}: {note: string} = body || ''
-    const doctor = body || {}
+    const {doctor} = body || {}
     const sessionId = uuidv4();
     const user = await currentUser()
     
@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
             createdBy: user.id,
             doctor
         }).returning()
+        console.log(result[0])
         return NextResponse.json(result[0]);
     } catch (error) {
         return NextResponse.json(error);

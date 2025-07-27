@@ -1,6 +1,10 @@
+'use client'
+
 import { Button } from "@/components/ui/button";
 import { IconArrowRight } from "@tabler/icons-react";
+import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export type DoctorAgent = {
     id: number;
@@ -13,6 +17,7 @@ export type DoctorAgent = {
 }
 
 function DoctorAgentCard({doctorAgent}: {doctorAgent: DoctorAgent}) {
+  const router = useRouter()
   return (
     <div className="">
         <Image alt={doctorAgent.specialist} src={doctorAgent.image} width={200} height={300}
@@ -20,7 +25,14 @@ function DoctorAgentCard({doctorAgent}: {doctorAgent: DoctorAgent}) {
         />
         <h2 className="font-bold mt-1">{doctorAgent.specialist}</h2>
         <p className="line-clamp-2 mt-1 text-sm text-gray-500">{doctorAgent.description}</p>
-        <Button className="w-full mt-2">Start Counsultation <IconArrowRight/></Button>
+        <Button className="w-full mt-2"
+            onClick={async ()=>{
+              const response = await axios.post('/api/generate-session', {note: '', doctor: doctorAgent})
+              const {sessionId} = response.data
+              console.log(sessionId)
+              router.push(`/medical-agent/${sessionId}`)
+            }}
+        >Start Counsultation <IconArrowRight/></Button>
     </div>
   )
 }

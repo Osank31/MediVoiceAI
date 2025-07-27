@@ -17,18 +17,16 @@ type SessionDetails = {
     report: JSON;
     createdBy: string;
     doctor: {
-        note: string;
-        doctor: {
-            id: number;
-            specialist: string;
-            description: string;
-            image: string;
-            agentPrompt: string;
-            voiceId: string;
-            subscriptionRequired: boolean;
-        };
+        id: number;
+        specialist: string;
+        description: string;
+        image: string;
+        agentPrompt: string;
+        voiceId: string;
+        subscriptionRequired: boolean;
     };
-};
+    };
+
 
 function DoctorSessionPage() {
     const { sessionId } = useParams()
@@ -64,7 +62,7 @@ function DoctorSessionPage() {
             },
             voice: {
                 provider: 'playht',
-                voiceId: data?.doctor?.doctor?.voiceId ?? '',
+                voiceId: data?.doctor?.voiceId ?? '',
             },
             model: {
                 provider: 'openai',
@@ -72,7 +70,7 @@ function DoctorSessionPage() {
                 messages: [
                     {
                         role: 'system',
-                        content: data?.doctor?.doctor?.agentPrompt || 'You are a helpful medical assistant designed to answer health-related questions in a clear and accurate way.'
+                        content: data?.doctor?.agentPrompt || 'You are a helpful medical assistant designed to answer health-related questions in a clear and accurate way.'
                     }
                 ]
             }
@@ -173,13 +171,13 @@ function DoctorSessionPage() {
                     {data && (
                         <div className="flex items-center flex-col">
                             <Image
-                                src={data?.doctor.doctor.image ?? '/default-image.png'}
-                                alt={data?.doctor.doctor.specialist ?? 'Doctor image'}
+                                src={data?.doctor.image ?? '/default-image.png'}
+                                alt={data?.doctor.specialist ?? 'Doctor image'}
                                 width={120}
                                 height={120}
                                 className="h-[100px] w-[100px] object-cover rounded-full"
                             />
-                            <h2 className="mt-2 text-lg">{data.doctor.doctor.specialist}</h2>
+                            <h2 className="mt-2 text-lg">{data.doctor.specialist}</h2>
                             <p className="text-sm text-gray-400">AI Medical Voice Agent</p>
 
                             <div className="mt-8 w-full max-w-md">
