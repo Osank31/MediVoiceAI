@@ -6,7 +6,7 @@ import { SignedOut, SignInButton, SignUpButton, UserButton, useUser } from "@cle
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export function HeroSectionOne() {
+export default function Home() {
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-white via-gray-50 to-white dark:from-[#0f0f11] dark:via-[#121215] dark:to-[#0f0f11]">
       <Navbar />
@@ -64,7 +64,7 @@ export function HeroSectionOne() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4 }}
         >
-          
+          {/* Add any preview component/image here if needed */}
         </motion.div>
       </div>
 
@@ -121,5 +121,3 @@ const GradientBorders = () => (
     </div>
   </>
 );
-
-export default HeroSectionOne;
