@@ -29,7 +29,7 @@ function ViewReportDialog({ history }: { history: History }) {
                         <div className="mt-6 space-y-4">
                             <div>
                                 <h2 className="font-bold text-blue-500 text-lg">Doctor Info</h2>
-                                <p><strong>Specialization:</strong> {doctor?.specialist}</p>
+                                <p><strong>Specialization:</strong> {doctor?.speciaist}</p>
                                 <p><strong>Description:</strong> {doctor?.description}</p>
                             </div>
 
@@ -37,7 +37,6 @@ function ViewReportDialog({ history }: { history: History }) {
                                 <div>
                                     <h2 className="font-bold text-blue-500 text-lg mt-4">Report</h2>
                                     <p><strong>User:</strong> {report?.user}</p>
-                                    <p><strong>Timestamp:</strong> {new Date(report?.timestamp).toLocaleString()}</p>
                                     <p><strong>Chief Complaint:</strong> {report?.chiefComplaint}</p>
                                     <p><strong>Summary:</strong> {report?.summary}</p>
                                 </div>
