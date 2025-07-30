@@ -205,6 +205,7 @@ After a more thorough evaluation of the doctor list and the "body pain" symptom,
   return ans
 }
 
+// @ts-ignore
 export async function generateReport(input) {
   const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY!,
