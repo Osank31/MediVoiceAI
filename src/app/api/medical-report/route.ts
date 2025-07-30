@@ -6,12 +6,8 @@ import { currentUser } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 
 export async function POST(req: NextRequest) {
+    console.log("hit /api/medical-report")
     const { sessionId, sessionDetail, messages } = await req.json()
-    const user = await currentUser();
-    if (!user) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     try {
         let response = await generateReport({ sessionId, sessionDetail, messages })
         console.log('here')

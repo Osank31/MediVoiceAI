@@ -1,145 +1,125 @@
 "use client";
 
-
 import { motion } from "motion/react";
-import { FeatureBentoGrid } from '@/components/FeatureBentoGrid'
+import { FeatureBentoGrid } from "@/components/FeatureBentoGrid";
 import { SignedOut, SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import axios from 'axios'
 
 export function HeroSectionOne() {
-  // const f = async()=>{
-  //   try {
-  //     const result = await axios.post('/api/class')
-  //     console.log(result.data)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-  // f()
   return (
-    <div className="relative flex flex-col items-center justify-center">
+    <div className="relative min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-white via-gray-50 to-white dark:from-[#0f0f11] dark:via-[#121215] dark:to-[#0f0f11]">
       <Navbar />
-      <div className="absolute inset-y-0 left-0 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
-        <div className="absolute top-0 h-40 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent" />
-      </div>
-      <div className="absolute inset-y-0 right-0 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
-        <div className="absolute h-40 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent" />
-      </div>
-      <div className="absolute inset-x-0 bottom-0 h-px w-full bg-neutral-200/80 dark:bg-neutral-800/80">
-        <div className="absolute mx-auto h-px w-40 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-      </div>
-      <div className="px-4 py-10 md:py-20">
-        <h1 className="relative z-10 mx-auto max-w-4xl text-center text-2xl font-bold text-slate-700 md:text-4xl lg:text-7xl dark:text-slate-300">
-          {"Revolutionize Patient care with AI voice Agents"
+
+      {/* Decorative Lines */}
+      <GradientBorders />
+
+      {/* Hero Content */}
+      <div className="w-full max-w-6xl px-6 py-16 md:py-24 text-center">
+        <motion.h1
+          className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-slate-800 dark:text-white"
+          initial="hidden"
+          animate="visible"
+        >
+          {"Revolutionize Patient Care with AI Voice Agents"
             .split(" ")
             .map((word, index) => (
               <motion.span
                 key={index}
-                initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
-                animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                transition={{
-                  duration: 0.3,
-                  delay: index * 0.1,
-                  ease: "easeInOut",
-                }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.08 }}
                 className="mr-2 inline-block"
               >
                 {word}
               </motion.span>
             ))}
-        </h1>
+        </motion.h1>
+
         <motion.p
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          transition={{
-            duration: 0.3,
-            delay: 0.8,
-          }}
-          className="relative z-10 mx-auto max-w-xl py-4 text-center text-lg font-normal text-neutral-600 dark:text-neutral-400"
+          className="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-neutral-600 dark:text-neutral-400"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
         >
-          Deliver instant, accurate medical information and support to patients using advanced AI voice technology.
+          Deliver instant, accurate medical information and support using cutting-edge AI voice assistants built for healthcare.
         </motion.p>
-        <Link href={'/sign-in'}>
-          <motion.div
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            transition={{
-              duration: 0.3,
-              delay: 1,
-            }}
-            className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
-          >
 
-            <button className="w-60 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-              Get Started
-            </button>
-
-          </motion.div>
-        </Link>
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 10,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.3,
-            delay: 1.2,
-          }}
-          className="relative z-10 mt-20 rounded-3xl border border-neutral-200 bg-neutral-100 p-4 shadow-md dark:border-neutral-800 dark:bg-neutral-900"
+          className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
         >
-          <div className="w-full overflow-hidden rounded-xl border border-gray-300 dark:border-gray-700">
-            <img
-              src="https://assets.aceternity.com/pro/aceternity-landing.webp"
-              alt="Landing page preview"
-              className="aspect-[16/9] h-auto w-full object-cover"
-              height={1000}
-              width={1000}
-            />
-          </div>
+          <Link href="/sign-in">
+            <Button className="w-48 text-lg py-6 dark:bg-white dark:text-black dark:hover:bg-gray-200">
+              Get Started
+            </Button>
+          </Link>
+        </motion.div>
+
+        <motion.div
+          className="mt-20 rounded-3xl overflow-hidden shadow-lg border border-neutral-200 dark:border-neutral-800"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.4 }}
+        >
+          
         </motion.div>
       </div>
+
       <FeatureBentoGrid />
     </div>
   );
 }
 
 const Navbar = () => {
-  const { user } = useUser()
+  const { user } = useUser();
   return (
-    <nav className="flex w-full items-center justify-between border-t border-b border-neutral-200 px-4 py-4 dark:border-neutral-800">
-      <div className="flex items-center gap-2">
-        <div className="size-7 rounded-full bg-gradient-to-br from-violet-500 to-pink-500" />
-        <h1 className="text-base font-bold md:text-2xl">Aceternity UI</h1>
+    <nav className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-white/80 backdrop-blur-md px-6 py-4 dark:bg-black/60 dark:border-neutral-800 flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <div className="size-8 rounded-full bg-gradient-to-br from-violet-500 to-pink-500" />
+        <h1 className="text-lg font-semibold text-gray-800 dark:text-white">
+          MediVoice AI
+        </h1>
       </div>
       <div>
         {!user ? (
-          <div>
-            <SignedOut>
-              <SignInButton />
-              <SignUpButton />
-            </SignedOut>
-          </div>
-        ) :
-          (<div className="flex gap-5 items-center">
+          <SignedOut>
+            <div className="flex gap-4">
+              <SignInButton mode="modal">
+                <Button variant="outline">Sign In</Button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <Button>Sign Up</Button>
+              </SignUpButton>
+            </div>
+          </SignedOut>
+        ) : (
+          <div className="flex items-center gap-4">
             <UserButton />
-            <Link href={'/dashboard'}><Button>Dashboard</Button></Link>
-          </div>)}
+            <Link href="/dashboard">
+              <Button>Dashboard</Button>
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );
 };
-export default HeroSectionOne
+
+const GradientBorders = () => (
+  <>
+    <div className="absolute inset-y-0 left-0 w-px bg-neutral-200/80 dark:bg-neutral-800/80">
+      <div className="absolute top-0 h-40 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent" />
+    </div>
+    <div className="absolute inset-y-0 right-0 w-px bg-neutral-200/80 dark:bg-neutral-800/80">
+      <div className="absolute top-0 h-40 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent" />
+    </div>
+    <div className="absolute bottom-0 inset-x-0 h-px bg-neutral-200/80 dark:bg-neutral-800/80">
+      <div className="absolute mx-auto h-px w-40 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+    </div>
+  </>
+);
+
+export default HeroSectionOne;

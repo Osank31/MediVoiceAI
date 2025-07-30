@@ -8,6 +8,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import ViewReportDialog from "./ViewReportDialog"
 
 function HistoryTable({ historyList }) {
     return (
@@ -22,16 +23,14 @@ function HistoryTable({ historyList }) {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {historyList.length>0 && historyList.map((history, idx) =>(
+                {historyList && historyList.length>0 && historyList.map((history, idx) =>(
                     <TableRow key={idx}>
                         
                         <TableCell className="font-medium">{`${history?.sessionId?.slice(0,10)}....`}</TableCell>
                         <TableCell>{'Complete'}</TableCell>
                         <TableCell>{history?.report?.chiefComplaint}</TableCell>
                         <TableCell>
-                            <Button variant="link" className="text-blue-500 hover:underline">
-                                View Report
-                            </Button>
+                            <ViewReportDialog history={history}/>
                         </TableCell>
                     </TableRow>
                 ))}

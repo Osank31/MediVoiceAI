@@ -6,17 +6,41 @@ import AddNewSessionDialog from "./AddNewSessionDialog";
 import HistoryTable from "./HistoryTable";
 
 function HistoryList() {
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [historyList, setHistoryList] = useState([]);
     const getHistoryList = async () =>{
-        const response = await fetch('/api/get-session-data?sessionId=all');
-        const data = await response.json();
-        console.log(data);
-        setHistoryList(data);
+        try {
+            const response = await fetch('/api/get-session-data?sessionId=all');
+            const data = await response.json();
+            console.log(JSON.stringify(data));
+            setHistoryList(data);
+        } catch (error) {
+            console.error("Error fetching history list:", error);
+            setError("Failed to load history. Please try again later.");
+        }
+        finally{
+            setIsLoading(false);
+        }
     }
 
     useEffect(()=>{
         getHistoryList();
     },[])
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <div className="loader"></div>
+            </div>
+        );
+    }
+    if (error) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <p className="text-red-500">{error}</p>
+            </div>
+        );
+    }
   return (
     <div className="mt-10 w-11/12">
         {historyList.length === 0 ? (

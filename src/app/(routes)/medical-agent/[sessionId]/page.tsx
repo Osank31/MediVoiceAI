@@ -191,7 +191,9 @@ function DoctorSessionPage() {
                 sessionDetail: data,
                 sessionId
             })
-            router.push('/dashboard')
+            console.log(result.data)
+            if (result.data) 
+                router.push('/dashboard')
         } catch (error) {
             console.log(error)
         }
