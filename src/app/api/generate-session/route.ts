@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     const {doctor} = body || {}
     const sessionId = uuidv4();
     const user = await currentUser()
-    
+    console.log(sessionId)
     
     try {
         if(!user){

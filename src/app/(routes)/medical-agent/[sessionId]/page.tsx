@@ -190,8 +190,6 @@ function DoctorSessionPage() {
                 sessionDetail: data,
                 sessionId
             })
-            const response = await axios.post('/api/save-report', result)
-            console.log(response.data)
         } catch (error) {
             console.log(error)
         }
