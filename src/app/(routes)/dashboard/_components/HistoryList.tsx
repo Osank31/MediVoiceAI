@@ -1,11 +1,22 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import AddNewSessionDialog from "./AddNewSessionDialog";
+import HistoryTable from "./HistoryTable";
 
 function HistoryList() {
     const [historyList, setHistoryList] = useState([]);
+    const getHistoryList = async () =>{
+        const response = await fetch('/api/get-session-data?sessionId=all');
+        const data = await response.json();
+        console.log(data);
+        setHistoryList(data);
+    }
+
+    useEffect(()=>{
+        getHistoryList();
+    },[])
   return (
     <div className="mt-10 w-11/12">
         {historyList.length === 0 ? (
@@ -19,8 +30,11 @@ function HistoryList() {
                 <AddNewSessionDialog/>
             </div>
         ):(
-            <div></div>
+            <div>
+                <HistoryTable historyList={historyList} />
+            </div>
         )}    
+
     </div>
   )
 }

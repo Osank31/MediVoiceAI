@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { Circle, PhoneOff } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
@@ -29,6 +29,7 @@ type SessionDetails = {
 
 
 function DoctorSessionPage() {
+    const router = useRouter()
     const { sessionId } = useParams()
     const [data, setData] = useState<SessionDetails | null>(null)
     const [loading, setLoading] = useState(true)
@@ -190,6 +191,7 @@ function DoctorSessionPage() {
                 sessionDetail: data,
                 sessionId
             })
+            router.push('/dashboard')
         } catch (error) {
             console.log(error)
         }

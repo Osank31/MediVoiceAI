@@ -40,7 +40,7 @@ function AddNewSessionDialog() {
                 setNote('')
             }
         }}>
-            <DialogTrigger><Button className="mt-3">+ Start a consultation</Button></DialogTrigger>
+            <DialogTrigger asChild><Button className="mt-3">+ Start a consultation</Button></DialogTrigger>
             <DialogContent>
                 {!suggestion ? (
                     <div>
