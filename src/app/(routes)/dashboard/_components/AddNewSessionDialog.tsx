@@ -10,8 +10,6 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 
-import { suggestDoctors } from '@/helpers/GoogleAIResponse'
-
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { DialogClose } from "@radix-ui/react-dialog";
