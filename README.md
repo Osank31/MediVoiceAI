@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Medical Voice Agent
+
+A Next.js application that revolutionizes patient care with AI-powered voice agents. Instantly analyze symptoms, book appointments, and generate EMR reports using cutting-edge AI.
+
+## Features
+
+- **Voice-Based Symptom Checker:** Patients describe symptoms verbally and receive real-time analysis.
+- **Automated Appointment Booking:** AI assistant books appointments and sends reminders.
+- **Real-Time EMR Summarization:** Converts voice conversations into structured EMR notes.
+- **Sentiment & Tone Detection:** Understands patient emotion and urgency for better triage.
+- **Specialist AI Agents:** Choose from a range of AI doctor agents for targeted consultations.
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org/)
+- [React](https://react.dev/)
+- [Clerk](https://clerk.com/) for authentication
+- [Drizzle ORM](https://orm.drizzle.team/) & NeonDB for database
+- [Google GenAI](https://ai.google.dev/) for medical suggestions and report generation
+- [Tailwind CSS](https://tailwindcss.com/) for styling
+- [Vapi AI](https://vapi.ai/) for voice agent integration
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/yourusername/ai-medical-voice-agent.git
+   cd ai-medical-voice-agent
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Set up environment variables:**
+   - Copy `.env.example` to `.env` and fill in your API keys and database URL.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Run the development server:**
+   ```sh
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Folder Structure
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/` - Main source code
+  - `app/` - Next.js app routes and pages
+  - `components/` - UI and feature components
+  - `config/` - Database and schema configuration
+  - `helpers/` - AI integration logic
+  - `lib/` - Utility functions
+- `public/` - Static assets (doctor images, etc.)
+- `shared/` - Shared lists and constants
