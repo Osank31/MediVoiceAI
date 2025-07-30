@@ -4,16 +4,43 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import AddNewSessionDialog from "./AddNewSessionDialog";
 import HistoryTable from "./HistoryTable";
-
+export type History={
+    conversation?: string | null;
+    createdBy: string;
+    id: number;
+    notes?: string | null;
+    sessionId: string;
+    doctor?: {
+        agentPrompt?: string;
+        description?: string;
+        id: number;
+        image?: string;
+        speciaist?: string;
+        subscriptionRequired?: boolean;
+        voiceId?: string;
+    };
+    report?:{
+        agent?: string;
+        chiefComplaint?: string;
+        duration?: string;
+        medicationsMentioned?: string[];
+        recommendations?: string[];
+        sessionId?:string;
+        severity?: string;
+        summary?: string;
+        timestamp?: string;
+        user?: string;
+    } | null;
+}
 function HistoryList() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [historyList, setHistoryList] = useState([]);
+    const [historyList, setHistoryList] = useState<History[]>([]);
     const getHistoryList = async () =>{
         try {
             const response = await fetch('/api/get-session-data?sessionId=all');
-            const data = await response.json();
-            console.log(JSON.stringify(data));
+            const data : History[] = await response.json();
+            console.log((data));
             setHistoryList(data);
         } catch (error) {
             console.error("Error fetching history list:", error);

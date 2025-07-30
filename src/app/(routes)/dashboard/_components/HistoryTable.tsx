@@ -10,7 +10,9 @@ import {
 } from "@/components/ui/table"
 import ViewReportDialog from "./ViewReportDialog"
 
-function HistoryTable({ historyList }: {historyList: any[]}) {
+import { History } from "./HistoryList"
+
+function HistoryTable({ historyList }: {historyList: History[]}) {
     return (
         <Table>
             <TableCaption>A list of your recent invoices.</TableCaption>

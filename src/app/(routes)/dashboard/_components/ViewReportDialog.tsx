@@ -8,7 +8,9 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 
-function ViewReportDialog({ history }: { history: any }) {
+import { History } from "./HistoryList"
+
+function ViewReportDialog({ history }: { history: History }) {
     const { doctor, report } = history
 
     return (
