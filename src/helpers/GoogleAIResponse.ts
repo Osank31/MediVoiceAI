@@ -2,6 +2,7 @@
 // npm install @google/genai mime
 // npm install -D @types/node
 
+import { SessionDetails } from '@/app/(routes)/medical-agent/[sessionId]/page';
 import {
   GoogleGenAI,
 } from '@google/genai';
@@ -205,11 +206,16 @@ After a more thorough evaluation of the doctor list and the "body pain" symptom,
   return ans
 }
 
-type Input = {
+export type Input = {
   role: string;
   text: string;
 }
-export async function generateReport(input: Input[]) {
+export type InputWithSession = {
+  sessionId: string;
+  sessionDetail: SessionDetails;
+  messages: Input[];
+}
+export async function generateReport(input: InputWithSession) {
   const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY!,
   });

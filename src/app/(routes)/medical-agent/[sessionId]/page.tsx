@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import Vapi from "@vapi-ai/web"
 import { CreateAssistantDTO } from "@vapi-ai/web/dist/api"
 
-type SessionDetails = {
+export type SessionDetails = {
     id: number;
     sessionId: string;
     notes: string;
